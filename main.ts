@@ -1,30 +1,21 @@
-input.onButtonPressed(Button.A, function () {
-    servos.P0.setRange(70, 110)
-    servos.P0.run(29)
-    basic.pause(1000)
-    servos.P0.stop()
-    basic.pause(1000)
-    servos.P0.run(-60)
-    basic.pause(1000)
-    servos.P0.stop()
-})
-input.onButtonPressed(Button.B, function () {
-    servos.P1.setRange(70, 110)
-    servos.P1.run(26)
-    basic.pause(1000)
-    servos.P1.stop()
-    basic.pause(5000)
-    basic.pause(2000)
-    servos.P1.run(-52)
-    basic.pause(1000)
-    servos.P1.stop()
-})
 basic.forever(function () {
-    images.createBigImage(`
-        . . . . # . . . . .
-        . . . # . # . . . .
-        . . # . . . # . . .
-        . # . . . . . # . .
-        # . . . . . . . # .
-        `).scrollImage(1, 90)
+    if (pins.digitalReadPin(DigitalPin.P2) == 1) {
+        while (input.buttonIsPressed(Button.A)) {
+            servos.P0.setRange(70, 110)
+            servos.P0.run(-42)
+        }
+        while (input.buttonIsPressed(Button.B)) {
+            servos.P0.run(5)
+        }
+        servos.P0.stop()
+    } else if (pins.digitalReadPin(DigitalPin.P2) == 0) {
+        while (input.buttonIsPressed(Button.A)) {
+            servos.P1.setRange(70, 110)
+            servos.P1.run(-100)
+        }
+        while (input.buttonIsPressed(Button.B)) {
+            servos.P1.run(6)
+        }
+        servos.P1.stop()
+    }
 })
